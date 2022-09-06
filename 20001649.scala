@@ -3,43 +3,63 @@ import scala.io.StdIn.readLine;
 
 object CeasarCipher{
 
-    val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" 
+    val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-    def encryption(a: Int): Unit = { 
-        
-        print("Shift By: ")
+    def encryption(): Unit = {
 
-        val shift = (readInt()*a + alphabet.size) % alphabet.size  
-         
-        val inputText =readLine("Secret Message: ").toUpperCase() 
+        print("Shift By : ")
+        val shift = (readInt() + alphabet.size) % alphabet.size
+        val input = readLine("Secret Message: ").toUpperCase() 
 
-        val outputText = inputText.map( (c: Char) => { 
- 
-            val x = alphabet.indexOf(c)
+        val output = input.map( (ch: Char) => {
 
-            //If the c char is in our alphabet then we encrypt it 
-            //If it is not then we leave it be.
-            if (x == -1){
-                c
+            val newCh = alphabet.indexOf(ch)
+
+            if (newCh == -1){
+                ch
             }
             else{
-                alphabet((x + shift) % alphabet.size)
-                } 
-        });
- 
-        println("Message :"+outputText);
+                alphabet((newCh + shift) % alphabet.size)
+            } 
+        })
 
-    } 
+        println("Encrypted Message :"+ output);
+    }
+
+    def decryption(): Unit = {
+
+        print("Shift By : ")
+        val shift = (readInt() + alphabet.size) % alphabet.size
+        val input = readLine("Secret Message: ").toUpperCase()
+
+        val output = input.map( (ch: Char) => {
+
+            val newCh = alphabet.indexOf(ch)
+
+            if (newCh == -1){
+                ch
+            }
+            else{
+                alphabet((newCh - shift) % alphabet.size)
+            } 
+        })
+
+        println("Decrypted Message :"+ output);
+    }
+
     def main(args: Array[String]) :Unit={
 
-        println("  1  Encryption \n  2  Decryption ")
-        
+        println("What do you want : ")
+        println("\tTo Encrypt => 1 \n\tTo Decrypt => 2")
         print("Enter option:")
         val x: Int = readInt();
+
         x match
-            case 1 => encryption(1);
-            case 2 => encryption(-1); 
+            case 1 => encryption();
+            case 2 => decryption(); 
             case _ => println("Invalid entry")
 
     }
+
+
 }
